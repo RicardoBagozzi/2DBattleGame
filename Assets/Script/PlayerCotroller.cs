@@ -44,6 +44,15 @@ public class PlayerCotroller : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
+        //isJumping = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
         isJumping = false;
+
+        // Derrota o inimigo se pular em cima
+        if (collision.gameObject.tag == "Inimigo" && collision.GetContact(0).normal.y > 0)
+            Destroy(collision.gameObject);
     }
 }
