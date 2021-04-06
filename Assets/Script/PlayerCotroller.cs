@@ -10,6 +10,7 @@ public class PlayerCotroller : MonoBehaviour
 
     private Rigidbody2D rb;
     private float movementX;
+    private bool isJumping = false;
 
     // Start is called before the first frame update
     void Start()
@@ -24,11 +25,25 @@ public class PlayerCotroller : MonoBehaviour
 
     private void OnJump(InputValue inputValue)
     {
-        rb.AddForce(new Vector2(0.0f, jumpHeight), ForceMode2D.Impulse);
+        if (!isJumping)
+        {
+            rb.AddForce(new Vector2(0.0f, jumpHeight), ForceMode2D.Impulse);
+        }
     }
 
     private void FixedUpdate()
     {
         rb.AddForce(new Vector2(movementX * speed, 0.0f));
+        
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        isJumping = true;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        isJumping = false;
     }
 }
